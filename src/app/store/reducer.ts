@@ -1,12 +1,12 @@
 import { ActionReducerMap } from '@ngrx/store';
-import * as fromFriends from './states';
+import * as fromGateways from './states/gateways';
 
 export interface State {
-  friends: fromFriends.State;
+  friends: fromGateways.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
-  friends: fromFriends.reducer,
+  friends: fromGateways.reducer
 };
 
 export const metaReducers = [];
