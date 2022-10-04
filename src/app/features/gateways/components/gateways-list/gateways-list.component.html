@@ -1,1 +1,28 @@
-<p>gateways-list works!</p>
+<div class="container">
+  <div class="title">
+    <label>Gateways List</label>
+  </div>
+
+  <ul class="gateways" *ngIf="gatewaysList$ | async as gateways">
+    <li
+      *ngFor="
+        let gateway of gateways
+          | paginate
+            : {
+                itemsPerPage: 10,
+                currentPage: page,
+                totalItems
+              };
+        trackBy: trackByFn
+      "
+    >
+      <!-- <app-friend-list-item [friend]="friend"></app-friend-list-item> -->
+    </li>
+  </ul>
+
+  <div>
+    <pagination-controls
+      (pageChange)="loadGateways($event)"
+    ></pagination-controls>
+  </div>
+</div>

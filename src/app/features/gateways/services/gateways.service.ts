@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { PagedResult } from '@core/models/paged-result';
 import { API_URL } from '@environment/environment';
 import { map, Observable } from 'rxjs';
 import { IGateway } from '../interfaces/gateway';
@@ -13,19 +14,28 @@ export class GatewaysService {
   constructor(private http: HttpClient) {}
 
   getAll(
-    skip: number,
-    take: number,
-    filters: string
-  ): Observable<GatewayModel[]> {
+    sorts: string,
+    filters: string,
+    page: number,
+    pageSize: number
+  ): Observable<PagedResult> {
     return this.http
-      .get<IGateway[]>(this.baseUrl, {
+      .get<PagedResult>(this.baseUrl, {
         params: {
-          skip,
-          take,
-          filters
+          sorts,
+          filters,
+          page,
+          pageSize
         }
       })
-      .pipe(map((data) => data.map((t: IGateway) => new GatewayModel(t))));
+      .pipe(
+        map((data: PagedResult) => {
+          return {
+            ...data,
+            results: data.results.map((t: IGateway) => new GatewayModel(t))
+          };
+        })
+      );
   }
 
   getById(): Observable<GatewayModel> {

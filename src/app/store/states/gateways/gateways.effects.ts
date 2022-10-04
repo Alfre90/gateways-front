@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { PagedResult } from '@core/models/paged-result';
+import { GatewayModel } from '@features/gateways/models/gateway';
 import { GatewaysService } from '@features/gateways/services/gateways.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
@@ -11,9 +13,14 @@ export class GatewaysEffects {
   loadFriends$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(GatewaysActions.loadGateways),
-      concatMap(({ skip, take, filters }) =>
-        this.gatewayService.getAll(skip, take, filters).pipe(
-          map((gateways) => GatewaysActions.loadGatewaysSuccess({ gateways })),
+      concatMap(({ sorts, filters, page, pageSize }) =>
+        this.gatewayService.getAll(sorts, filters, page, pageSize).pipe(
+          map((results: PagedResult) =>
+            GatewaysActions.loadGatewaysSuccess({
+              gateways: results.results as GatewayModel[],
+              totalItems: results.rowCount
+            })
+          ),
           catchError((error) =>
             of(GatewaysActions.loadGatewaysFailure({ error }))
           )

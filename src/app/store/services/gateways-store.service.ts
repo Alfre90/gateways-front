@@ -8,13 +8,16 @@ import * as GatewaysSelector from '../states/gateways/gateways.selectors';
   providedIn: 'root'
 })
 export class GatewaysStoreService {
-  sllGateways$ = this._store.select(GatewaysSelector.selectAllGateways);
+  allGateways$ = this._store.select(GatewaysSelector.selectAllGateways);
   selectedGateway$ = this._store.select(GatewaysSelector.selectGatewaySelected);
+  totalItems$ = this._store.select(GatewaysSelector.selectTotalItems);
 
   constructor(private _store: Store) {}
 
-  loadGateways(skip = 1, take = 15, filters = '') {
-    this._store.dispatch(GatewaysActions.loadGateways({ skip, take, filters }));
+  loadGateways(sorts = '', filters = '', page = 1, pageSize = 15) {
+    this._store.dispatch(
+      GatewaysActions.loadGateways({ sorts, filters, page, pageSize })
+    );
   }
 
   loadGateway(id: number) {

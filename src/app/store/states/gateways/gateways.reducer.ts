@@ -1,26 +1,29 @@
 import { IGateway } from '@features/gateways/interfaces/gateway';
+import { GatewayModel } from '@features/gateways/models/gateway';
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
 import * as GatewayActions from './gateways.actions';
 
 export const gatewaysFeatureKey = 'gateways';
 
-export interface State extends EntityState<IGateway> {
+export interface State extends EntityState<GatewayModel> {
   selected?: number;
+  total: number;
 }
 
-export const adapter = createEntityAdapter<IGateway>();
+export const adapter = createEntityAdapter<GatewayModel>();
 
-export const initialState: State = adapter.getInitialState();
+export const initialState: State = adapter.getInitialState({ total: 0 });
 
 export const reducer = createReducer(
   initialState,
 
   // Get all friens
   on(GatewayActions.loadGateways, (state) => ({ ...state })),
-  on(GatewayActions.loadGatewaysSuccess, (state, { gateways }) =>
+  on(GatewayActions.loadGatewaysSuccess, (state, { gateways, totalItems }) =>
     adapter.upsertMany(gateways, {
-      ...state
+      ...state,
+      total: totalItems
     })
   ),
   on(GatewayActions.loadGatewaysFailure, (state, action) => ({

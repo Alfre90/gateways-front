@@ -12,3 +12,8 @@ export const selectGatewaySelected = createSelector(
   selectGatewaysState,
   (state) => state.entities[state.selected!]
 );
+
+export const selectTotalItems = createSelector(
+  selectGatewaysState,
+  (state) => state.total
+);

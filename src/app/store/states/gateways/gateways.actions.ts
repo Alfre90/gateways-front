@@ -1,18 +1,20 @@
 import { IGateway } from '@features/gateways/interfaces/gateway';
+import { GatewayModel } from '@features/gateways/models/gateway';
 import { createAction, props } from '@ngrx/store';
 
 export const loadGateways = createAction(
   '[Gateways] Load Gateways',
   props<{
-    skip: number;
-    take: number;
+    sorts: string;
     filters: string;
+    page: number;
+    pageSize: number;
   }>()
 );
 
 export const loadGatewaysSuccess = createAction(
   '[Gateways] Load Gateways Success',
-  props<{ gateways: IGateway[] }>()
+  props<{ gateways: GatewayModel[]; totalItems: number }>()
 );
 
 export const loadGatewaysFailure = createAction(
