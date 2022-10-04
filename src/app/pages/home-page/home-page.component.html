@@ -1,1 +1,34 @@
-<router-outlet></router-outlet>
+<gw-main-header [sidenav]="sidenav"></gw-main-header>
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav style="width: 200px">
+    <mat-nav-list>
+      <a mat-list-item class="right-align">
+        <button mat-icon-button>
+          <mat-icon (click)="sidenav.toggle()">close</mat-icon>
+        </button></a
+      >
+      <a
+        mat-list-item
+        [routerLink]="'/dashboard'"
+        [ngStyle]="{ color: selected == 'dashboard' ? 'indigo' : '' }"
+        (click)="selected = 'dashboard'; sidenav.toggle()"
+      >
+        Dashboard
+      </a>
+      <a
+        mat-list-item
+        [routerLink]="'/gateways'"
+        [ngStyle]="{ color: selected == 'gateways' ? 'indigo' : '' }"
+        (click)="selected = 'gateways'; sidenav.toggle()"
+      >
+        Gateways
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div style="height: 88vh">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

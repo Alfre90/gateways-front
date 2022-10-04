@@ -9,7 +9,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'gateways',
+        redirectTo: 'dashboard',
         pathMatch: 'full'
       },
       {
@@ -24,6 +24,13 @@ const routes: Routes = [
         loadChildren: () =>
           import('../gateways-page/gateways-page.module').then(
             (m) => m.GatewaysPageModule
+          )
+      },
+      {
+        path: 'dashboard',
+        loadChildren: () =>
+          import('../dashboard-page/dashboard-page.module').then(
+            (m) => m.DashboardPageModule
           )
       }
     ]

@@ -6,10 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit {
+  selected: string = 'dashboard';
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
