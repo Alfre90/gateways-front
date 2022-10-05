@@ -17,11 +17,16 @@ import { AddGatewayModalComponent } from '../add-gateway-modal/add-gateway-modal
 export class GatewaysListComponent implements OnInit {
   gatewaysList$ = this.gatewaysService.allGateways$;
   totalItems$ = this.gatewaysService.totalItems$;
+  loading$ = this.gatewaysService.loading$;
   page: number = 1;
   pageSize: number = 5;
   saving: boolean = false;
   isEdit: boolean = false;
   deleting: boolean = false;
+  filters: string = '';
+  timeout: any;
+  sortBy: string = '';
+  sortOrder: string = '';
 
   @ViewChild('confirmModal') confirmModal!: ConfirmModalComponent;
   @ViewChild('addGatewayModal') addGatewayModal!: AddGatewayModalComponent;
@@ -38,14 +43,28 @@ export class GatewaysListComponent implements OnInit {
   }
 
   loadGateways(page: number) {
-    console.log(this.page);
     this.page = page;
-    this.gatewaysService.loadGateways('', '', page, this.pageSize);
+    this.gatewaysService.loadGateways(
+      (this.sortOrder == 'asc' ? '' : this.sortOrder == 'desc' ? '-' : '') +
+        this.sortBy,
+      '(Name|SerialNumber|IPv4)@=' + this.filters,
+      page,
+      this.pageSize
+    );
   }
 
   // TrackBy function to allow specify the changes separately
   trackByFn(index: number, item: GatewayModel) {
     return item.id;
+  }
+
+  searchGateway() {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
+    this.timeout = setTimeout(() => {
+      this.loadGateways(1);
+    }, 500);
   }
 
   addGateway() {

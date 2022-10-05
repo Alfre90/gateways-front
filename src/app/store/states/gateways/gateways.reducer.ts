@@ -9,25 +9,31 @@ export const gatewaysFeatureKey = 'gateways';
 export interface State extends EntityState<GatewayModel> {
   selected?: number;
   total: number;
+  loading: boolean;
 }
 
 export const adapter = createEntityAdapter<GatewayModel>();
 
-export const initialState: State = adapter.getInitialState({ total: 0 });
+export const initialState: State = adapter.getInitialState({
+  total: 0,
+  loading: false
+});
 
 export const reducer = createReducer(
   initialState,
 
   // Get all gateways
-  on(GatewayActions.loadGateways, (state) => ({ ...state })),
+  on(GatewayActions.loadGateways, (state) => ({ ...state, loading: true })),
   on(GatewayActions.loadGatewaysSuccess, (state, { gateways, totalItems }) =>
     adapter.setAll(gateways, {
       ...state,
-      total: totalItems
+      total: totalItems,
+      loading: false
     })
   ),
   on(GatewayActions.loadGatewaysFailure, (state, action) => ({
-    ...state
+    ...state,
+    loading: false
   })),
 
   // Get selected gateway

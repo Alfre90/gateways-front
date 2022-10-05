@@ -13,35 +13,97 @@
   </div>
 
   <div class="row">
-    <ul class="gateways">
-      <li *ngFor="let gateway of gatewaysList$ | async; trackBy: trackByFn">
-        <gw-gateway-item
-          [gateway]="gateway"
-          (onClick)="gatewayClick($event)"
-          (onEdit)="gatewayEdit($event)"
-          (onDelete)="gatewayDelete($event)"
-        ></gw-gateway-item>
-      </li>
-    </ul>
+    <div class="col-4">
+      <mat-form-field appearance="outline">
+        <mat-label>Sort By</mat-label>
+        <mat-select [(ngModel)]="sortBy" (ngModelChange)="searchGateway()">
+          <mat-option value="Name">Name</mat-option>
+          <mat-option value="SerialNumber">Serial Number</mat-option>
+          <mat-option value="IPv4">Ipv4</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-4">
+      <mat-form-field appearance="outline">
+        <mat-label>Sort Order</mat-label>
+        <mat-select [(ngModel)]="sortOrder" (ngModelChange)="searchGateway()">
+          <mat-option value="asc">Ascending</mat-option>
+          <mat-option value="desc">Descending</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-4">
+      <mat-form-field appearance="outline" style="width: 100%">
+        <mat-label>Search Gateway</mat-label>
+        <input
+          matInput
+          placeholder="Search Gateway"
+          [(ngModel)]="filters"
+          (ngModelChange)="searchGateway()"
+        />
+        <mat-icon color="primary" matPrefix>search</mat-icon>
+      </mat-form-field>
+    </div>
   </div>
 
-  <div class="row" *ngIf="totalItems$ | async as totalItems">
-    <div class="col-sm-10">
-      <ngb-pagination
-        [(page)]="page"
-        [pageSize]="pageSize"
-        [collectionSize]="totalItems"
-        (pageChange)="loadGateways($event)"
-        aria-label="Default pagination"
+  <ng-container *ngIf="gatewaysList$ | async as gateways">
+    <ng-container
+      *ngIf="
+        gateways.length > 0 && !(loading$ | async);
+        else noGatewaysOrLoading
+      "
+    >
+      <div class="row">
+        <ul class="gateways">
+          <li *ngFor="let gateway of gateways; trackBy: trackByFn">
+            <gw-gateway-item
+              [gateway]="gateway"
+              (onClick)="gatewayClick($event)"
+              (onEdit)="gatewayEdit($event)"
+              (onDelete)="gatewayDelete($event)"
+            ></gw-gateway-item>
+          </li>
+        </ul>
+      </div>
+    </ng-container>
+
+    <ng-template #noGatewaysOrLoading>
+      <div
+        class="row"
+        style="justify-content: center; height: 200px; align-items: center"
+        *ngIf="loading$ | async"
       >
-        <ng-template ngbPaginationPrevious>Prev</ng-template>
-        <ng-template ngbPaginationNext>Next</ng-template>
-      </ngb-pagination>
+        <mat-spinner [diameter]="40"></mat-spinner>
+      </div>
+      <div
+        class="row"
+        *ngIf="!(loading$ | async)"
+        style="justify-content: center; height: 200px; align-items: center"
+      >
+        <h3 style="text-align: center">
+          There are no gateways. Click on '+' button to add the first
+        </h3>
+      </div>
+    </ng-template>
+
+    <div class="row" *ngIf="totalItems$ | async as totalItems">
+      <div class="col-sm-10">
+        <ngb-pagination
+          [(page)]="page"
+          [pageSize]="pageSize"
+          [collectionSize]="totalItems"
+          (pageChange)="loadGateways($event)"
+          aria-label="Default pagination"
+        >
+          <ng-template ngbPaginationPrevious>Prev</ng-template>
+          <ng-template ngbPaginationNext>Next</ng-template>
+        </ngb-pagination>
+      </div>
+      <div class="col-sm-2 float-right">
+        <p>Total Records: {{ totalItems }}</p>
+      </div>
     </div>
-    <div class="col-sm-2 float-right">
-      <p>Total Records: {{ totalItems }}</p>
-    </div>
-  </div>
+  </ng-container>
 </div>
 
 <gw-add-gateway-modal

@@ -4,7 +4,7 @@ import { GatewaysListComponent } from './components/gateways-list/gateways-list.
 import { MaterialModule } from '@core/material/material.module';
 import { GatewayItemComponent } from './components/gateway-item/gateway-item.component';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '@shared/shared.module';
 import { AddGatewayModalComponent } from './components/add-gateway-modal/add-gateway-modal.component';
 
@@ -19,7 +19,8 @@ import { AddGatewayModalComponent } from './components/add-gateway-modal/add-gat
     MaterialModule,
     NgbPaginationModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    FormsModule
   ],
   exports: [GatewaysListComponent]
 })

@@ -35,7 +35,7 @@ export class AddGatewayModalComponent implements OnInit {
     this.addGatewayForm = this.formBuilder.group({
       id: new FormControl(),
       serialNumber: new FormControl('', Validators.required),
-      name: new FormControl('', Validators.required),
+      name: new FormControl('', Validators.compose([Validators.required])),
       iPv4: new FormControl(
         '',
         Validators.compose([

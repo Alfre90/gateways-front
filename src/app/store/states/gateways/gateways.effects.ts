@@ -63,7 +63,7 @@ export class GatewaysEffects {
             });
           }),
           catchError((error: HttpErrorResponse) => {
-            this.toastService.show(error.error.split(':')[1].split('.')[0], {
+            this.toastService.show(error?.error?.split(':')[1].split('.')[0], {
               classname: 'bg-danger text-light',
               delay: 5000
             });
@@ -87,7 +87,7 @@ export class GatewaysEffects {
             return GatewaysActions.editGatewaySuccess({ gateway });
           }),
           catchError((error: HttpErrorResponse) => {
-            this.toastService.show(error.error.split(':')[1].split('.')[0], {
+            this.toastService.show(error?.error?.split(':')[1].split('.')[0], {
               classname: 'bg-danger text-light',
               delay: 5000
             });
@@ -111,7 +111,7 @@ export class GatewaysEffects {
             return GatewaysActions.deleteGatewaySuccess({ id });
           }),
           catchError((error: HttpErrorResponse) => {
-            this.toastService.show(error.error.split(':')[1].split('.')[0], {
+            this.toastService.show(error?.error?.split(':')[1].split('.')[0], {
               classname: 'bg-danger text-light',
               delay: 5000
             });

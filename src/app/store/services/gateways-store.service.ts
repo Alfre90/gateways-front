@@ -13,6 +13,7 @@ export class GatewaysStoreService {
   allGateways$ = this._store.select(GatewaysSelector.selectAllGateways);
   selectedGateway$ = this._store.select(GatewaysSelector.selectGatewaySelected);
   totalItems$ = this._store.select(GatewaysSelector.selectTotalItems);
+  loading$ = this._store.select(GatewaysSelector.selectLoading);
 
   constructor(private _store: Store) {}
 

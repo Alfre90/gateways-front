@@ -17,3 +17,8 @@ export const selectTotalItems = createSelector(
   selectGatewaysState,
   (state) => state.total
 );
+
+export const selectLoading = createSelector(
+  selectGatewaysState,
+  (state) => state.loading
+);
