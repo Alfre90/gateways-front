@@ -2,11 +2,25 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GatewaysListComponent } from './components/gateways-list/gateways-list.component';
 import { MaterialModule } from '@core/material/material.module';
-import { NgxPaginationModule } from 'ngx-pagination';
+import { GatewayItemComponent } from './components/gateway-item/gateway-item.component';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '@shared/shared.module';
+import { AddGatewayModalComponent } from './components/add-gateway-modal/add-gateway-modal.component';
 
 @NgModule({
-  declarations: [GatewaysListComponent],
-  imports: [CommonModule, MaterialModule, NgxPaginationModule],
+  declarations: [
+    GatewaysListComponent,
+    GatewayItemComponent,
+    AddGatewayModalComponent
+  ],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    NgbPaginationModule,
+    ReactiveFormsModule,
+    SharedModule
+  ],
   exports: [GatewaysListComponent]
 })
 export class GatewaysModule {}

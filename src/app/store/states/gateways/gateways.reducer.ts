@@ -18,10 +18,10 @@ export const initialState: State = adapter.getInitialState({ total: 0 });
 export const reducer = createReducer(
   initialState,
 
-  // Get all friens
+  // Get all gateways
   on(GatewayActions.loadGateways, (state) => ({ ...state })),
   on(GatewayActions.loadGatewaysSuccess, (state, { gateways, totalItems }) =>
-    adapter.upsertMany(gateways, {
+    adapter.setAll(gateways, {
       ...state,
       total: totalItems
     })
@@ -40,5 +40,30 @@ export const reducer = createReducer(
   ),
   on(GatewayActions.loadGatewayFailure, (state, { error }) => ({
     ...state
-  }))
+  })),
+
+  // Add gateway
+  on(GatewayActions.addGateway, (state) => ({ ...state })),
+  on(GatewayActions.addGatewaySuccess, (state, { gateway }) =>
+    adapter.addOne(new GatewayModel({ ...gateway }), {
+      ...state
+    })
+  ),
+  on(GatewayActions.addGatewayFailure, (state) => ({ ...state })),
+
+  // Edit gateway,
+  on(GatewayActions.editGateway, (state) => ({ ...state })),
+  on(GatewayActions.editGatewaySuccess, (state, { gateway }) =>
+    adapter.upsertOne(new GatewayModel(gateway), { ...state })
+  ),
+  on(GatewayActions.editGatewayFailure, (state) => ({ ...state })),
+
+  // Delete gateway
+  on(GatewayActions.deleteGateway, (state) => ({ ...state })),
+  on(GatewayActions.deleteGatewaySuccess, (state, { id }) =>
+    adapter.removeOne(id, {
+      ...state
+    })
+  ),
+  on(GatewayActions.deleteGatewayFailure, (state) => ({ ...state }))
 );

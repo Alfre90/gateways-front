@@ -1,0 +1,39 @@
+<div class="row align-items-center p-2">
+  <div class="col-10">
+    <div class="data d-flex value">
+      <label class="text-name"
+        >Name: <span class="value-name">{{ gateway.name }}</span></label
+      >
+      <span class="text"
+        >Serial Number:
+        <span class="value">{{ gateway.serialNumber }}</span></span
+      >
+      <span class="text"
+        >Ipv4: <span class="value">{{ gateway.iPv4 }}</span></span
+      >
+    </div>
+  </div>
+  <div class="col-2" style="text-align: end; display: flex">
+    <button mat-icon-button matTooltip="See gateway details">
+      <mat-icon
+        (click)="onClick.emit(gateway)"
+        style="color: gray; font-size: 20px"
+        >visibility</mat-icon
+      >
+    </button>
+    <button mat-icon-button matTooltip="Edit gateway">
+      <mat-icon
+        (click)="onEdit.emit(gateway)"
+        style="color: blue; font-size: 20px"
+        >edit</mat-icon
+      >
+    </button>
+    <button mat-icon-button matTooltip="Delete gateway">
+      <mat-icon
+        (click)="onDelete.emit(gateway)"
+        style="color: red; font-size: 20px"
+        >delete</mat-icon
+      >
+    </button>
+  </div>
+</div>

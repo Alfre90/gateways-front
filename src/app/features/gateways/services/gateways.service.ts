@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { PagedResult } from '@core/models/paged-result';
 import { API_URL } from '@environment/environment';
 import { map, Observable } from 'rxjs';
+import { IAddGateway } from '../interfaces/add-gateway';
 import { IGateway } from '../interfaces/gateway';
 import { GatewayModel } from '../models/gateway';
 
@@ -42,5 +43,17 @@ export class GatewaysService {
     return this.http
       .get<IGateway>(this.baseUrl + `/id`)
       .pipe(map((data) => new GatewayModel(data)));
+  }
+
+  addGateway(gateway: IAddGateway): Observable<{ id: number }> {
+    return this.http.post<{ id: number }>(this.baseUrl, gateway);
+  }
+
+  editGateway(gateway: IGateway): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${gateway.id}`, gateway);
+  }
+
+  deleteGateway(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`).pipe();
   }
 }

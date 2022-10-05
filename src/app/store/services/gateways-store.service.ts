@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { IAddGateway } from '@features/gateways/interfaces/add-gateway';
+import { IGateway } from '@features/gateways/interfaces/gateway';
 import { Store } from '@ngrx/store';
 
 import * as GatewaysActions from '../states/gateways/gateways.actions';
@@ -22,5 +24,17 @@ export class GatewaysStoreService {
 
   loadGateway(id: number) {
     this._store.dispatch(GatewaysActions.loadGateway({ id }));
+  }
+
+  addGateway(gateway: IAddGateway) {
+    this._store.dispatch(GatewaysActions.addGateway({ gateway }));
+  }
+
+  editGateway(gateway: IGateway) {
+    this._store.dispatch(GatewaysActions.editGateway({ gateway }));
+  }
+
+  deleteGateway(id: number) {
+    this._store.dispatch(GatewaysActions.deleteGateway({ id }));
   }
 }

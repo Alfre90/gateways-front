@@ -1,5 +1,4 @@
-export interface IGateway {
-  id: number;
+export interface IAddGateway {
   serialNumber: string;
   name: string;
   iPv4: string;

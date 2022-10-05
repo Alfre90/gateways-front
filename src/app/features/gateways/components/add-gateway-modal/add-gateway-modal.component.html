@@ -1,0 +1,68 @@
+<ng-template #addGatewayModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      {{ !isEdit ? 'Add Gateway' : 'Edit Gateway' }}
+    </h4>
+    <button mat-icon-button (click)="modal.dismiss()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="addGatewayForm" novalidate>
+      <input hidden formControlName="id" />
+      <div class="row">
+        <div class="col-6">
+          <mat-form-field
+            appearance="outline"
+            style="width: 100%; margin-right: 0.25rem"
+          >
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Name" formControlName="name" />
+            <mat-error *ngIf="errorControl['name'].errors?.['required']"
+              >Name is required</mat-error
+            >
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+          <mat-form-field
+            appearance="outline"
+            style="width: 100%; margin-left: 0.25rem"
+          >
+            <mat-label>Serial Number</mat-label>
+            <input
+              matInput
+              placeholder="Serial Number"
+              formControlName="serialNumber"
+            />
+            <mat-error *ngIf="errorControl['serialNumber'].errors?.['required']"
+              >Serial number is required</mat-error
+            >
+          </mat-form-field>
+        </div>
+        <div class="col-12">
+          <mat-form-field appearance="outline" style="width: 100%">
+            <mat-label>Ipv4</mat-label>
+            <input matInput placeholder="Ipv4" formControlName="iPv4" />
+            <mat-error *ngIf="errorControl['iPv4'].errors?.['required']"
+              >Ipv4 number is required</mat-error
+            >
+            <mat-error *ngIf="errorControl['iPv4'].errors?.['validIpv4']"
+              >Ipv4 number is incorrect</mat-error
+            >
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      [disabled]="!addGatewayForm.valid || saving"
+      (click)="onSave.emit(addGatewayForm)"
+    >
+      {{ saving ? 'Saving' : 'Save' }}
+    </button>
+  </div>
+</ng-template>

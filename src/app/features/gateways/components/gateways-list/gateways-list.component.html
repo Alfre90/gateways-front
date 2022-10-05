@@ -1,28 +1,59 @@
 <div class="container">
-  <div class="title">
-    <label>Gateways List</label>
+  <div class="row pt-2">
+    <div class="col-10">
+      <label class="title">Gateways List</label>
+    </div>
+    <div class="col-2" style="text-align: end">
+      <button mat-raised-button matTooltip="Add gateway" color="primary">
+        <mat-icon (click)="addGateway()" style="color: white; font-size: 22px"
+          >add</mat-icon
+        >
+      </button>
+    </div>
   </div>
 
-  <ul class="gateways" *ngIf="gatewaysList$ | async as gateways">
-    <li
-      *ngFor="
-        let gateway of gateways
-          | paginate
-            : {
-                itemsPerPage: 10,
-                currentPage: page,
-                totalItems
-              };
-        trackBy: trackByFn
-      "
-    >
-      <!-- <app-friend-list-item [friend]="friend"></app-friend-list-item> -->
-    </li>
-  </ul>
+  <div class="row">
+    <ul class="gateways">
+      <li *ngFor="let gateway of gatewaysList$ | async; trackBy: trackByFn">
+        <gw-gateway-item
+          [gateway]="gateway"
+          (onClick)="gatewayClick($event)"
+          (onEdit)="gatewayEdit($event)"
+          (onDelete)="gatewayDelete($event)"
+        ></gw-gateway-item>
+      </li>
+    </ul>
+  </div>
 
-  <div>
-    <pagination-controls
-      (pageChange)="loadGateways($event)"
-    ></pagination-controls>
+  <div class="row" *ngIf="totalItems$ | async as totalItems">
+    <div class="col-sm-10">
+      <ngb-pagination
+        [(page)]="page"
+        [pageSize]="pageSize"
+        [collectionSize]="totalItems"
+        (pageChange)="loadGateways($event)"
+        aria-label="Default pagination"
+      >
+        <ng-template ngbPaginationPrevious>Prev</ng-template>
+        <ng-template ngbPaginationNext>Next</ng-template>
+      </ngb-pagination>
+    </div>
+    <div class="col-sm-2 float-right">
+      <p>Total Records: {{ totalItems }}</p>
+    </div>
   </div>
 </div>
+
+<gw-add-gateway-modal
+  #addGatewayModal
+  [saving]="saving"
+  [isEdit]="isEdit"
+  (onSave)="saveGateway($event)"
+></gw-add-gateway-modal>
+
+<gw-confirm-modal
+  #confirmModal
+  [type]="'gateway'"
+  [deleting]="deleting"
+  (onDelete)="deleteGateway($event)"
+></gw-confirm-modal>

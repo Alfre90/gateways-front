@@ -4,9 +4,16 @@ import { HomePageComponent } from './home-page.component';
 import { HomePageRoutingModule } from './home-page-routing.module';
 import { MaterialModule } from '@core/material/material.module';
 import { HeaderModule } from '@features/header/header.module';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
   declarations: [HomePageComponent],
-  imports: [CommonModule, HomePageRoutingModule, HeaderModule, MaterialModule]
+  imports: [
+    CommonModule,
+    HomePageRoutingModule,
+    HeaderModule,
+    MaterialModule,
+    SharedModule
+  ]
 })
 export class HomePageModule {}
