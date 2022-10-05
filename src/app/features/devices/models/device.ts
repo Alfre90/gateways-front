@@ -2,13 +2,13 @@ import { GatewayModel } from '@features/gateways/models/gateway';
 import { IDevice } from '../interfaces/device';
 
 export class DeviceModel {
-  id: number;
+  id?: number;
   uid: number;
   gatewayId: number;
   vendor: string;
   created: Date | string | null;
   status: boolean;
-  gateway: GatewayModel;
+  gateway?: GatewayModel;
 
   constructor(
     device: IDevice = {
