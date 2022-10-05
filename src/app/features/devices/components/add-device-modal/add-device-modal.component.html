@@ -1,0 +1,48 @@
+<ng-template #addDeviceModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      {{ !isEdit ? 'Add Device' : 'Edit Device' }}
+    </h4>
+    <button mat-icon-button (click)="modal.dismiss()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="addDeviceForm" novalidate>
+      <input hidden formControlName="id" />
+      <input hidden formControlName="uid" />
+      <input hidden formControlName="gatewayId" />
+      <div class="row" style="align-items: center">
+        <div class="col-6">
+          <mat-form-field
+            appearance="outline"
+            style="width: 100%; margin-right: 0.25rem"
+          >
+            <mat-label>Vendor</mat-label>
+            <input matInput placeholder="Vendor" formControlName="vendor" />
+            <mat-error *ngIf="errorControl['vendor'].errors?.['required']"
+              >Vendor is required</mat-error
+            >
+          </mat-form-field>
+        </div>
+        <div class="col-6" style="text-align: center">
+          <label style="margin-right: 16px">Status: </label>
+          <mat-slide-toggle formControlName="status">{{
+            addDeviceForm.controls['status'].value ? 'Online' : 'Offline'
+          }}</mat-slide-toggle>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      [disabled]="!addDeviceForm.valid || saving"
+      (click)="onSave.emit(addDeviceForm)"
+    >
+      {{ saving ? 'Saving' : 'Save' }}
+    </button>
+  </div>
+</ng-template>

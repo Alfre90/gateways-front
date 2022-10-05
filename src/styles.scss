@@ -85,3 +85,13 @@ button:hover,
 [role='button']:hover {
   cursor: pointer;
 }
+
+.title {
+  font-family: 'Inter' sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 24px;
+  color: #b1b9db;
+  margin-bottom: 24px;
+}

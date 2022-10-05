@@ -7,12 +7,19 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '@shared/shared.module';
 import { AddGatewayModalComponent } from './components/add-gateway-modal/add-gateway-modal.component';
+import { GatewayLayoutComponent } from './layouts/gateway-layout/gateway-layout.component';
+import { GatewayHeaderComponent } from './components/gateway-header/gateway-header.component';
+import { GatewayDevicesListComponent } from './components/gateway-devices-list/gateway-devices-list.component';
+import { DevicesModule } from '@features/devices/devices.module';
 
 @NgModule({
   declarations: [
     GatewaysListComponent,
     GatewayItemComponent,
-    AddGatewayModalComponent
+    AddGatewayModalComponent,
+    GatewayLayoutComponent,
+    GatewayHeaderComponent,
+    GatewayDevicesListComponent
   ],
   imports: [
     CommonModule,
@@ -20,8 +27,9 @@ import { AddGatewayModalComponent } from './components/add-gateway-modal/add-gat
     NgbPaginationModule,
     ReactiveFormsModule,
     SharedModule,
-    FormsModule
+    FormsModule,
+    DevicesModule
   ],
-  exports: [GatewaysListComponent]
+  exports: [GatewaysListComponent, GatewayLayoutComponent]
 })
 export class GatewaysModule {}

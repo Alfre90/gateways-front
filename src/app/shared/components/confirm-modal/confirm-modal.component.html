@@ -1,6 +1,8 @@
 <ng-template #confirmModal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Delete Gateway</h4>
+    <h4 class="modal-title" id="modal-basic-title">
+      Delete {{ type == 'gateway' ? 'Gateway' : 'Device' }}
+    </h4>
     <button mat-icon-button (click)="modal.dismiss()">
       <mat-icon>close</mat-icon>
     </button>

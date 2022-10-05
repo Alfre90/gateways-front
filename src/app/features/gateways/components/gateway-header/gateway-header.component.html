@@ -1,0 +1,36 @@
+<mat-card>
+  <mat-card-title class="title">
+    <div class="row" style="align-items: center">
+      <div class="col-1">
+        <button mat-icon-button (click)="location.back()">
+          <mat-icon class="primary">arrow_back</mat-icon>
+        </button>
+      </div>
+      <div class="col-11">Gateway Data</div>
+    </div>
+  </mat-card-title>
+  <mat-card-content>
+    <div class="row" style="margin-top: 24px">
+      <div class="col-4">
+        <label style="font-weight: bold"
+          >Serial Number:
+          <span style="font-weight: normal">{{
+            gateway.serialNumber
+          }}</span></label
+        >
+      </div>
+      <div class="col-4">
+        <label style="font-weight: bold"
+          >Name:
+          <span style="font-weight: normal">{{ gateway.name }}</span></label
+        >
+      </div>
+      <div class="col-4">
+        <label style="font-weight: bold"
+          >IPv4 Address:
+          <span style="font-weight: normal">{{ gateway.iPv4 }}</span></label
+        >
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

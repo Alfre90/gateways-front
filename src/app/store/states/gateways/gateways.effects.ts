@@ -12,7 +12,7 @@ import * as GatewaysActions from './gateways.actions';
 
 @Injectable()
 export class GatewaysEffects {
-  loadFriends$ = createEffect(() => {
+  loadGateways$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(GatewaysActions.loadGateways),
       concatMap(({ sorts, filters, page, pageSize }) =>
@@ -31,11 +31,11 @@ export class GatewaysEffects {
     );
   });
 
-  loadFriend$ = createEffect(() => {
+  loadGateway$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(GatewaysActions.loadGateway),
       concatMap(({ id }) =>
-        this.gatewayService.getById().pipe(
+        this.gatewayService.getById(id).pipe(
           map((gateway) => GatewaysActions.loadGatewaySuccess({ gateway })),
           catchError((error) =>
             of(GatewaysActions.loadGatewayFailure({ error }))

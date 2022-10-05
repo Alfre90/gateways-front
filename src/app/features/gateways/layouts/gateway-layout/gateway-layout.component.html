@@ -1,0 +1,9 @@
+<div class="container" *ngIf="gateway$ | async as gateway">
+  <div class="row">
+    <gw-gateway-header [gateway]="gateway"></gw-gateway-header>
+  </div>
+
+  <div class="row" style="margin-top: 16px">
+    <gw-gateway-devices-list [gatewayId]="gatewayId"></gw-gateway-devices-list>
+  </div>
+</div>

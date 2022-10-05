@@ -4,7 +4,10 @@ import { EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { metaReducers, reducers } from './reducer';
+import { DevicesStoreService } from './services/devices-store.service';
 import { GatewaysStoreService } from './services/gateways-store.service';
+import { DevicesStoreModule } from './states/devices';
+import { DevicesEffects } from './states/devices/devices.effects';
 import { GatewaysStoreModule } from './states/gateways';
 import { GatewaysEffects } from './states/gateways/gateways.effects';
 
@@ -14,10 +17,11 @@ import { GatewaysEffects } from './states/gateways/gateways.effects';
 @NgModule({
   imports: [
     StoreModule.forRoot(reducers, { metaReducers }),
-    EffectsModule.forRoot([GatewaysEffects]),
+    EffectsModule.forRoot([GatewaysEffects, DevicesEffects]),
     environment.production ? [] : StoreDevtoolsModule.instrument(),
-    GatewaysStoreModule
+    GatewaysStoreModule,
+    DevicesStoreModule
   ],
-  providers: [Store, GatewaysStoreService]
+  providers: [Store, GatewaysStoreService, DevicesStoreService]
 })
 export class AppStoreModule {}

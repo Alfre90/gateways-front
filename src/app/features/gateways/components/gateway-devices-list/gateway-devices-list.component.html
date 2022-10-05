@@ -1,0 +1,108 @@
+<mat-card>
+  <mat-card-title class="title">Gateway Devices List</mat-card-title>
+  <mat-card-content *ngIf="devicesList$ | async as devicesList">
+    <div class="row" style="justify-content: end">
+      <div class="col-2 offset-10" style="text-align: end">
+        <button
+          mat-raised-button
+          matTooltip="Add device"
+          color="primary"
+          [disabled]="devicesList.length >= 10"
+        >
+          <mat-icon (click)="addDevice()" style="color: white; font-size: 22px"
+            >add</mat-icon
+          >
+        </button>
+      </div>
+    </div>
+    <div class="row" *ngIf="devicesList.length > 0; else noDevicesOrLoading">
+      <div class="table-responsive mt-5">
+        <table class="table table-striped">
+          <thead class="table-header">
+            <tr>
+              <th>Uid</th>
+              <th>Vendor</th>
+              <th>Created Date</th>
+              <th>Status</th>
+              <th style="width: 10%"></th>
+              <th style="width: 10%"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let device of devicesList"
+              style="vertical-align: middle"
+            >
+              <td>{{ device.uid }}</td>
+              <td>{{ device.vendor }}</td>
+              <td>{{ device.created | date: 'MM/dd/yyyy' }}</td>
+              <td [ngStyle]="{ color: device.status ? 'green' : 'red' }">
+                {{ device.status ? 'Online' : 'Offline' }}
+              </td>
+              <td style="width: 10%">
+                <a class="menu-item cursor-pointer">
+                  <button
+                    mat-button
+                    matTooltip="Edit Device"
+                    (click)="deviceEdit(device)"
+                  >
+                    <mat-icon style="color: gray; font-size: 16px"
+                      >edit</mat-icon
+                    >
+                  </button></a
+                >
+              </td>
+              <td style="width: 10%">
+                <a class="menu-item cursor-pointer">
+                  <button
+                    mat-button
+                    matTooltip="Delete Device"
+                    (click)="deviceDelete(device)"
+                  >
+                    <mat-icon style="color: gray; font-size: 16px"
+                      >delete</mat-icon
+                    >
+                  </button></a
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <ng-template #noDevicesOrLoading>
+      <div
+        class="row"
+        style="justify-content: center; height: 200px; align-items: center"
+        *ngIf="loading$ | async"
+      >
+        <mat-spinner [diameter]="40"></mat-spinner>
+      </div>
+      <div
+        class="row"
+        *ngIf="!(loading$ | async)"
+        style="justify-content: center; height: 200px; align-items: center"
+      >
+        <h3 style="text-align: center">
+          There are no devices. Click on '+' button to add the first
+        </h3>
+      </div>
+    </ng-template>
+  </mat-card-content>
+</mat-card>
+
+<gw-add-device-modal
+  #addDeviceModal
+  [saving]="saving"
+  [isEdit]="isEdit"
+  [gatewayId]="gatewayId"
+  (onSave)="saveDevice($event)"
+></gw-add-device-modal>
+
+<gw-confirm-modal
+  #confirmModal
+  [type]="'device'"
+  [deleting]="deleting"
+  (onDelete)="deleteDevice($event)"
+></gw-confirm-modal>

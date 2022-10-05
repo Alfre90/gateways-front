@@ -3,22 +3,22 @@ import { Injectable } from '@angular/core';
 import { PagedResult } from '@core/models/paged-result';
 import { API_URL } from '@environment/environment';
 import { map, Observable } from 'rxjs';
-import { IAddGateway } from '../interfaces/add-gateway';
-import { IGateway } from '../interfaces/gateway';
-import { GatewayModel } from '../models/gateway';
+import { IAddDevice } from '../interfaces/add-device';
+import { IDevice } from '../interfaces/device';
+import { DeviceModel } from '../models/device';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GatewaysService {
-  baseUrl = API_URL + '/gateways';
+export class DevicesService {
+  baseUrl = API_URL + '/devices';
   constructor(private http: HttpClient) {}
 
   getAll(
     sorts: string,
     filters: string,
-    page: number,
-    pageSize: number
+    page: number = 1,
+    pageSize: number = 10
   ): Observable<PagedResult> {
     return this.http
       .get<PagedResult>(this.baseUrl, {
@@ -33,27 +33,27 @@ export class GatewaysService {
         map((data: PagedResult) => {
           return {
             ...data,
-            results: data.results.map((t: IGateway) => new GatewayModel(t))
+            results: data.results.map((t: IDevice) => new DeviceModel(t))
           };
         })
       );
   }
 
-  getById(id: number): Observable<GatewayModel> {
+  getById(id: number): Observable<DeviceModel> {
     return this.http
-      .get<IGateway>(this.baseUrl + `/${id}`)
-      .pipe(map((data) => new GatewayModel(data)));
+      .get<IDevice>(this.baseUrl + `/${id}`)
+      .pipe(map((data) => new DeviceModel(data)));
   }
 
-  addGateway(gateway: IAddGateway): Observable<{ id: number }> {
-    return this.http.post<{ id: number }>(this.baseUrl, gateway);
+  addDevice(device: IAddDevice): Observable<{ uid: number }> {
+    return this.http.post<{ uid: number }>(this.baseUrl, device);
   }
 
-  editGateway(gateway: IGateway): Observable<void> {
-    return this.http.put<void>(`${this.baseUrl}/${gateway.id}`, gateway);
+  editDevice(device: IDevice): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${device.uid}`, device);
   }
 
-  deleteGateway(id: number): Observable<void> {
+  deleteDevice(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`).pipe();
   }
 }
