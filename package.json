@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "yarn install && docker pull ranses/gatewaysapi:latest && docker run -d --name GatewaysApi -p 5000:80 ranses/gatewaysapi:latest && ng serve --open",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
